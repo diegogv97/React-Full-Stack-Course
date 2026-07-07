@@ -5,7 +5,7 @@ sequenceDiagram
     participant server
 
     user->>browser: Fill form and click "Save"
-    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note (body: {note: "a new note"})
     activate server
     server-->>browser: 302 Found
     deactivate server
