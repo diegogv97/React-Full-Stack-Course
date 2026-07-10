@@ -1,16 +1,16 @@
 ```mermaid
 sequenceDiagram
-    participant user
+    actor user
     participant browser
     participant server
 
-    user->>browser: Fill form and click "Save"
-    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note (body: {note: "a new note"})
+    user->>browser: Fills form and clicks "Save"
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note (payload: {note: "a new note"})
     activate server
+    Note over server: Saves note
     server-->>browser: 302 Found
+    Note over browser: Redirects to /notes
     deactivate server
-
-    Note right of browser: The server saves the note and asks the browser to perform a GET request to `/notes`
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
     activate server
