@@ -1,76 +1,20 @@
-import { useState } from "react";
-
-const Filter = ({ filterByName, setFilterByName }) => {
-  return (
-    <div>
-      fillter shown with:{" "}
-      <input
-        value={filterByName}
-        onChange={() => setFilterByName(event.target.value)}
-      />
-    </div>
-  );
-};
-
-const PersonForm = ({
-  newName,
-  setNewName,
-  newNumber,
-  setNewNumber,
-  handleSaveNewPerson,
-}) => {
-  return (
-    <form>
-      <div>
-        name:{" "}
-        <input
-          value={newName}
-          onChange={() => setNewName(event.target.value)}
-        />
-      </div>
-      <div>
-        number:{" "}
-        <input
-          value={newNumber}
-          onChange={() => setNewNumber(event.target.value)}
-        />
-      </div>
-      <div>
-        <button type="submit" onClick={handleSaveNewPerson}>
-          add
-        </button>
-      </div>
-    </form>
-  );
-};
-
-const Person = ({ person }) => {
-  return (
-    <p>
-      {person.name} {person.phoneNumber}
-    </p>
-  );
-};
-
-const People = ({ people, filterByName }) => {
-  const peopleToShow = people.filter((person) =>
-    person.name.includes(filterByName),
-  );
-
-  return (
-    <ul>
-      {peopleToShow.map((person) => (
-        <Person key={person.name} person={person} />
-      ))}
-    </ul>
-  );
-};
+import { useState, useEffect } from "react";
+import Filter from "./components/Filter";
+import PersonForm from "./components/PersonForm";
+import People from "./components/People";
+import axios from "axios";
 
 const App = () => {
-  const [people, setPeople] = useState([{ name: "", phoneNumber: "" }]);
+  const [people, setPeople] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filterByName, setFilterByName] = useState("");
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/persons").then((response) => {
+      setPeople(response.data);
+    });
+  }, []);
 
   const handleSaveNewPerson = (event) => {
     event.preventDefault();
@@ -80,7 +24,11 @@ const App = () => {
       return;
     }
 
-    const newPeople = people.concat({ name: newName, phoneNumber: newNumber });
+    const newPeople = people.concat({
+      name: newName,
+      number: newNumber,
+      id: people.length + 1,
+    });
     setPeople(newPeople);
   };
 
