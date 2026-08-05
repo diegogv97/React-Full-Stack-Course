@@ -3,12 +3,21 @@ import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import People from "./components/People";
 import peopleService from "./services/people";
+import Notification from "./components/Notification";
 
 const App = () => {
   const [people, setPeople] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filterByName, setFilterByName] = useState("");
+  const [notification, setNotification] = useState(null);
+
+  const displayTempMessage = (message, type) => {
+    setNotification({ message, type });
+    setTimeout(() => {
+      setNotification(null);
+    }, 5000);
+  };
 
   useEffect(() => {
     peopleService.getAll().then((initialPeople) => {
@@ -17,16 +26,30 @@ const App = () => {
   }, []);
 
   const updatePerson = (id, newPerson) => {
-    peopleService.update(id, newPerson).then((updatedPerson) => {
-      setPeople(
-        people.map((p) => (p.id === updatedPerson.id ? updatedPerson : p)),
-      );
-    });
+    peopleService
+      .update(id, newPerson)
+      .then((updatedPerson) => {
+        setPeople(
+          people.map((p) => (p.id === updatedPerson.id ? updatedPerson : p)),
+        );
+        displayTempMessage(
+          `Modified ${updatedPerson.name} phone number`,
+          "success",
+        );
+      })
+      .catch(() => {
+        displayTempMessage(
+          `Information of ${newPerson.name} no longer exists in the server`,
+          "error",
+        );
+        setPeople(people.filter((p) => p.id !== id));
+      });
   };
 
   const createPerson = (newPerson) => {
     peopleService.create(newPerson).then((createdPerson) => {
       setPeople(people.concat(createdPerson));
+      displayTempMessage(`Added ${createdPerson.name}`, "success");
     });
   };
 
@@ -61,15 +84,26 @@ const App = () => {
     const shouldDelete = window.confirm(`Delete ${personToDelete.name}?`);
 
     if (shouldDelete) {
-      peopleService.deleteOne(id).then((deletedPerson) => {
-        setPeople(people.filter((p) => p.id !== deletedPerson.id));
-      });
+      peopleService
+        .deleteOne(id)
+        .then((deletedPerson) => {
+          setPeople(people.filter((p) => p.id !== deletedPerson.id));
+          displayTempMessage(`Deleted ${personToDelete.name}`, "success");
+        })
+        .catch(() => {
+          displayTempMessage(
+            `Information of ${personToDelete.name} has already been removed from the server`,
+            "error",
+          );
+          setPeople(people.filter((p) => p.id !== personToDelete.id));
+        });
     }
   };
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification notification={notification} />
 
       <Filter filterByName={filterByName} setFilterByName={setFilterByName} />
 
