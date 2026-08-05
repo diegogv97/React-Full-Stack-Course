@@ -1,12 +1,13 @@
-const Person = ({ person }) => {
+const Person = ({ person, deletePerson }) => {
   return (
-    <p>
+    <li>
       {person.name} {person.number}
-    </p>
+      <button onClick={() => deletePerson(person.id)}>delete</button>
+    </li>
   );
 };
 
-const People = ({ people, filterByName }) => {
+const People = ({ people, filterByName, deletePerson }) => {
   const peopleToShow = people.filter((person) =>
     person.name.includes(filterByName),
   );
@@ -14,7 +15,7 @@ const People = ({ people, filterByName }) => {
   return (
     <ul>
       {peopleToShow.map((person) => (
-        <Person key={person.id} person={person} />
+        <Person key={person.id} person={person} deletePerson={deletePerson} />
       ))}
     </ul>
   );
