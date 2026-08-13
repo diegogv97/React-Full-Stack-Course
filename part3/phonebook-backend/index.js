@@ -19,6 +19,8 @@ app.use(
     ].join(" ");
   }),
 );
+app.use(cors());
+app.use(express.static("dist"));
 
 let people = [
   {
