@@ -86,8 +86,8 @@ const App = () => {
     if (shouldDelete) {
       peopleService
         .deleteOne(id)
-        .then((deletedPerson) => {
-          setPeople(people.filter((p) => p.id !== deletedPerson.id));
+        .then(() => {
+          setPeople(people.filter((p) => p.id !== id));
           displayTempMessage(`Deleted ${personToDelete.name}`, "success");
         })
         .catch(() => {
