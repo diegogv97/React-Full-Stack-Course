@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "dsznajder.es7-react-js-snippets",
+    "ms-vscode-remote.remote-wsl",
+    "dbaeumer.vscode-eslint",
+    "mongodb.mongodb-vscode",
+    "postman.postman-for-vscode"
+  ]
+}
