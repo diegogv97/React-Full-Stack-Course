@@ -83,7 +83,7 @@ app.put("/api/persons/:id", (request, response, next) => {
       person.name = name;
       person.number = number;
 
-      return person.save().then((updatedPerson) => {
+      return person.save({ runValidators: true }).then((updatedPerson) => {
         response.json(updatedPerson);
       });
     })
@@ -93,12 +93,6 @@ app.put("/api/persons/:id", (request, response, next) => {
 app.post("/api/persons", (request, response, next) => {
   const { name, number } = request.body;
 
-  if (!name || !number) {
-    return response.status(400).json({
-      error: "content missing",
-    });
-  }
-
   Person.findOne({ name })
     .then((foundPerson) => {
       if (foundPerson) {
@@ -106,7 +100,7 @@ app.post("/api/persons", (request, response, next) => {
       }
 
       const person = new Person({ name, number });
-      return person.save().then((person) => {
+      return person.save({ runValidators: true }).then((person) => {
         return response.json(person);
       });
     })
@@ -125,6 +119,10 @@ const errorHandler = (error, request, response, next) => {
 
   if (error.name === "CastError") {
     return response.status(400).send({ error: "malformatted id" });
+  }
+
+  if (error.name === "ValidationError") {
+    return response.status(400).json({ error: error.message });
   }
 
   if (error.name === "DuplicatedName") {

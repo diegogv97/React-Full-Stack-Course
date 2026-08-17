@@ -20,9 +20,14 @@ const App = () => {
   };
 
   useEffect(() => {
-    peopleService.getAll().then((initialPeople) => {
-      setPeople(initialPeople);
-    });
+    peopleService
+      .getAll()
+      .then((initialPeople) => {
+        setPeople(initialPeople);
+      })
+      .catch(() => {
+        displayTempMessage(`Something went wrong`, "error");
+      });
   }, []);
 
   const updatePerson = (id, newPerson) => {
@@ -37,20 +42,22 @@ const App = () => {
           "success",
         );
       })
-      .catch(() => {
-        displayTempMessage(
-          `Information of ${newPerson.name} no longer exists in the server`,
-          "error",
-        );
+      .catch((error) => {
+        displayTempMessage(error, "error");
         setPeople(people.filter((p) => p.id !== id));
       });
   };
 
   const createPerson = (newPerson) => {
-    peopleService.create(newPerson).then((createdPerson) => {
-      setPeople(people.concat(createdPerson));
-      displayTempMessage(`Added ${createdPerson.name}`, "success");
-    });
+    peopleService
+      .create(newPerson)
+      .then((createdPerson) => {
+        setPeople(people.concat(createdPerson));
+        displayTempMessage(`Added ${createdPerson.name}`, "success");
+      })
+      .catch((error) => {
+        displayTempMessage(error, "error");
+      });
   };
 
   const handleSaveNewPerson = (event) => {
