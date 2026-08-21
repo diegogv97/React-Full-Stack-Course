@@ -9,12 +9,13 @@
   "scripts": {
     "start": "node index.js",
     "dev": "npx kill-port 3001 && node --watch index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --test",
     "lint": "eslint ."
   },
   "dependencies": {
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "lodash": "^4.18.1",
     "mongoose": "^9.9.2",
     "morgan": "^1.11.0"
   },
