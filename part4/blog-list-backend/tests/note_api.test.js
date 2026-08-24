@@ -180,7 +180,6 @@ describe('when there is initially some blogs saved', () => {
 
       const validNonexistingId = await helper.nonExistingId()
 
-      console.log(blogToUpdate)
       await api
         .put(`/api/blogs/${validNonexistingId}`).send(blogToUpdate)
         .expect(404)
