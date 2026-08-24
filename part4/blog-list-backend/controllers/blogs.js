@@ -9,6 +9,13 @@ blogsRouter.get('/', async (request, response) => {
 })
 
 blogsRouter.post('/',async (request, response) => {
+  const { title, url } = request.body
+  if(!title || !url) {
+    return response.status(400).json({
+      error: 'title or url missing',
+    })
+  }
+
   const blog = new Blog(request.body)
   blog.likes = blog.likes ?? 0
   const savedBlog = await blog.save()
@@ -34,6 +41,29 @@ blogsRouter.delete('/:id', async (request, response) => {
   }
 
   return response.status(204).end()
+})
+
+blogsRouter.put('/:id', async (request, response) => {
+  const id = request.params.id
+  const { title, author, url, likes  } = request.body
+
+
+  if (!title || !url) {
+    return response.status(400).json({
+      error: 'content missing',
+    })
+  }
+
+  let blog = await Blog.findById(id)
+
+  if (!blog) {
+    return response.status(404).end()
+  }
+
+  Object.assign(blog, { title, author, url, likes })
+
+  const updatedBlog = await blog.save({ runValidators: true })
+  response.json(updatedBlog)
 })
 
 module.exports = blogsRouter

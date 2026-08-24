@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const logger = require('./utils/logger')
 const blogsRouter = require('./controllers/blogs')
 const config = require('./utils/config')
+const middleware = require('./middlewares/middleware')
 
 const app = express()
 
@@ -26,8 +27,14 @@ mongoose
 app.use(express.json())
 app.use(express.static('dist'))
 
+if(process.env.NODE_ENV !== 'test'){
+  app.use(middleware.requestLogger)
+}
 
 
 app.use('/api/blogs', blogsRouter)
+
+app.use(middleware.unknownEndpoint)
+app.use(middleware.errorHandler)
 
 module.exports = app
