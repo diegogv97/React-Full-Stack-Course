@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1792601452405" clover="3.2.0">
+  <project timestamp="1792601452405" name="All files">
+    <metrics statements="31" coveredstatements="28" conditionals="6" coveredconditionals="4" methods="10" coveredmethods="8" elements="47" coveredelements="40" complexity="0" loc="31" ncloc="31" packages="1" files="2" classes="2"/>
+    <file name="Blog.jsx" path="/home/dguzman/React-Full-Stack-Course/part5/blog-list-frontend/src/components/Blog.jsx">
+      <metrics statements="13" coveredstatements="11" conditionals="6" coveredconditionals="4" methods="4" coveredmethods="3"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="4" count="5" type="stmt"/>
+      <line num="6" count="5" type="stmt"/>
+      <line num="8" count="5" type="stmt"/>
+      <line num="14" count="5" type="stmt"/>
+      <line num="15" count="5" type="cond" truecount="2" falsecount="0"/>
+      <line num="17" count="5" type="stmt"/>
+      <line num="18" count="2" type="stmt"/>
+      <line num="19" count="2" type="stmt"/>
+      <line num="22" count="5" type="stmt"/>
+      <line num="23" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="24" count="0" type="stmt"/>
+      <line num="28" count="5" type="stmt"/>
+    </file>
+    <file name="BlogForm.jsx" path="/home/dguzman/React-Full-Stack-Course/part5/blog-list-frontend/src/components/BlogForm.jsx">
+      <metrics statements="18" coveredstatements="17" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="5"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="5" count="62" type="stmt"/>
+      <line num="6" count="62" type="stmt"/>
+      <line num="7" count="62" type="stmt"/>
+      <line num="8" count="62" type="stmt"/>
+      <line num="10" count="62" type="stmt"/>
+      <line num="11" count="1" type="stmt"/>
+      <line num="13" count="1" type="stmt"/>
+      <line num="20" count="1" type="stmt"/>
+      <line num="21" count="1" type="stmt"/>
+      <line num="22" count="1" type="stmt"/>
+      <line num="23" count="1" type="stmt"/>
+      <line num="24" count="1" type="stmt"/>
+      <line num="27" count="62" type="stmt"/>
+      <line num="35" count="25" type="stmt"/>
+      <line num="45" count="11" type="stmt"/>
+      <line num="55" count="24" type="stmt"/>
+      <line num="65" count="0" type="stmt"/>
+    </file>
+  </project>
+</coverage>
