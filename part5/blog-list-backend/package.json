@@ -11,6 +11,7 @@
     "build:ui": "rm -rf dist && cd ../blog-list-frontend/ && npm run build && cp -r dist ../blog-list-backend",
     "dev": "npx kill-port 3001 && npm run build:ui && NODE_ENV=development node --watch index.js",
     "test": "NODE_ENV=test node --test --test-concurrency=1",
+    "start:test": "NODE_ENV=test node --watch index.js",
     "lint": "eslint ."
   },
   "dependencies": {
